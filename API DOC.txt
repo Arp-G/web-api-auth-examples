@@ -1,0 +1,27 @@
+Main repo: https://github.com/spotify/web-api-auth-examples
+
+client_id = '55c6b8f5f89d40389eec21257513823b'; // Your client id
+client_secret = '85bf7bf0466e401a90f08d90653e8fa7'; // Your secret
+redirect_uri = 'http://www.localhost:8888/callback'; // Your redirect uri, must be whitelisted for your app in spotify dashboard
+
+// https://developer.spotify.com/documentation/general/guides/authorization-guide/#implicit-grant-flow
+// Sends suthorization request, will open up a page where the user must enter credentials to authorize himself which will redirect to
+// you redirection url with the acces token
+
+curl --location --request GET 'https://accounts.spotify.com/authorize?55c6b8f5f89d40389eec21257513823b=55c6b8f5f89d40389eec21257513823b&response_type=token&redirect_uri=http://www.localhost:8888/callback' \
+--header 'Content-Type: application/json' \
+--data-raw ''
+
+//if the user logins in correctly it will hit the recdirection url with the access token in the query string like...
+//http://www.localhost:8888/#access_token=BQBSHvN57rS_XvnE6sg5...
+
+
+// https://developer.spotify.com/documentation/web-api/reference/playlists/get-a-list-of-current-users-playlists/
+// Get all playlists of the user with the given auth token: GET https://api.spotify.com/v1/me/playlists
+curl -X GET "https://api.spotify.com/v1/me/playlists" -H "Authorization: Bearer BQC52JMTVhS67i66LbvjwXYZ26-cKQZA9sb9C_FPi92a-_578Z7ROYM2ZpUaaPeesTDqOJqqgVUhqmGzb3229SkVj-7b737r1RLa2EHN4-GUWEoQTPIyjBvpr_GzmvWq_-4BbOWDSl6_15M69CR_Stri7my6N00GIFadimXBXangrcgOmvzTEw"
+
+// You will get the playlist_id from the above use it to....
+
+https://developer.spotify.com/documentation/web-api/reference/playlists/get-playlists-tracks/
+// Get all tracks for this users playlists: GET https://api.spotify.com/v1/playlists/{playlist_id}/tracks
+curl -X "GET" "https://api.spotify.com/v1/playlists/1ZfEIN3xhiHB6J7FtUz6I8/tracks" -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: Bearer BQC52JMTVhS67i66LbvjwXYZ26-cKQZA9sb9C_FPi92a-_578Z7ROYM2ZpUaaPeesTDqOJqqgVUhqmGzb3229SkVj-7b737r1RLa2EHN4-GUWEoQTPIyjBvpr_GzmvWq_-4BbOWDSl6_15M69CR_Stri7my6N00GIFadimXBXangrcgOmvzTEw"
